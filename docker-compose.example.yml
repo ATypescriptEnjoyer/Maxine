@@ -1,7 +1,7 @@
 services:
     maxine:
       container_name: maxine
-      image: ghcr.io/sasharyder/maxine:latest
+      image: git.sashie.me/sasharyder/maxine:latest
       restart: always
       volumes:
         - "./data:/data"
