@@ -16,7 +16,6 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: http://gitea:3000
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
