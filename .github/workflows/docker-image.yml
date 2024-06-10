@@ -29,15 +29,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      
-      - run: cat /etc/hosts
 
       - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "${{ secrets.GITEA_TOKEN }}" | docker login ${{ env.REGISTRY }} --username ${{ secrets.GITEA_USERNAME }} --password-stdin
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
