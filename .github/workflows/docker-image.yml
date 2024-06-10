@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: git.sashie.me
+  REGISTRY: ${{ github.server_url }}
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
