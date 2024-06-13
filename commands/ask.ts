@@ -1,10 +1,8 @@
-import { sleep } from "bun";
 import {
 	AttachmentBuilder,
 	CommandInteraction,
 	SlashCommandBuilder,
 } from "discord.js";
-import OpenAI from "openai";
 import { runGPTAssistant } from "../runGPTAssistant";
 
 const data = new SlashCommandBuilder()

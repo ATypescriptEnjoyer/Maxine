@@ -14,7 +14,11 @@ const { DISCORD_TOKEN, ENABLE_INSPECTOR } = process.env;
 const client = new Client({ intents: [
 	GatewayIntentBits.Guilds, 
 	GatewayIntentBits.GuildMessages, 
-	GatewayIntentBits.MessageContent
+	GatewayIntentBits.MessageContent,
+	GatewayIntentBits.GuildScheduledEvents,
+	GatewayIntentBits.GuildMembers,
+	GatewayIntentBits.GuildMessageReactions,
+	GatewayIntentBits.GuildInvites,
  ] });
 
 const commands = [];
