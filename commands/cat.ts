@@ -1,4 +1,3 @@
-import { CommandInterface } from "./CommandInterface";
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import axios from "axios";
 
