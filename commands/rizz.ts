@@ -1,4 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import rizzLines from "../rizz.json";
+import _ from "underscore";
 
 const data = new SlashCommandBuilder()
 	.setName("rizz")
@@ -11,13 +13,9 @@ const data = new SlashCommandBuilder()
 	.setDescription("Rizz command. Nuff said.");
 
 const execute = async (interaction: CommandInteraction) => {
+	const rizz = _.sample(rizzLines);
 	const userToRizz = interaction.options.get("user").user;
-	await interaction.reply(`Hi ${userToRizz}
-I am wobot
-Beep book beep
-:robot:
-Beep beep
-Friends uwu`);
+	await interaction.reply(`${userToRizz}\r\n\r\n${rizz}`);
 };
 
 export { data, execute };
