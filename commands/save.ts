@@ -55,7 +55,6 @@ const execute = async (interaction: CommandInteraction) => {
 	const firstFilePath = filePath;
 	const filePathExt = filePath.split(".").slice(-1)[0];
 	const ext = filePathExt === as ? filePathExt : as;
-	const needsConvert = filePathExt !== as;
 	if (isClip) {
 		const ffmpegCommand = `-ss ${formatTimestamp(
 			clip_start,
@@ -71,7 +70,7 @@ const execute = async (interaction: CommandInteraction) => {
 			return await interaction.followUp(stdoutstr);
 		}
 		filePath = file;
-	} else if (needsConvert) {
+	} else {
 		const { exitCode, stdout, file } = await convertFile(filePath, ext, true);
 		if (exitCode !== 0) {
 			const stdoutstr = await new Response(stdout).text();
