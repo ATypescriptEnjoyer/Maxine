@@ -1,4 +1,4 @@
-FROM oven/bun:alpine as final
+FROM oven/bun:alpine AS final
 WORKDIR /usr/src/app
 
 # Set environment variables

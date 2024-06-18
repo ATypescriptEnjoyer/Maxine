@@ -2,7 +2,6 @@ import { canUploadToAzure, uploadFile } from "../storage";
 import {
 	AttachmentBuilder,
 	CommandInteraction,
-	Message,
 	RESTJSONErrorCodes,
 	SlashCommandBuilder,
 } from "discord.js";

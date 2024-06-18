@@ -2,12 +2,12 @@ import * as Discord from "discord.js";
 import { SlashCommandBuilder } from "discord.js";
 import axios from "axios";
 
-interface urbanListItem {
+interface UrbanListItem {
 	definition: string;
 	word: string;
 }
-interface urbanResponse {
-	list: urbanListItem[];
+interface UrbanResponse {
+	list: UrbanListItem[];
 }
 
 const data = new SlashCommandBuilder()
@@ -22,9 +22,9 @@ const data = new SlashCommandBuilder()
 
 const execute = async (interaction: Discord.CommandInteraction) => {
 	const toUrban = interaction.options.get("query").value as string;
-	let resultsToUse: urbanListItem[] = [];
+	let resultsToUse: UrbanListItem[] = [];
 	try {
-		const results = await axios.get<urbanResponse>(
+		const results = await axios.get<UrbanResponse>(
 			`https://api.urbandictionary.com/v0/define?term=${toUrban}`,
 		);
 		resultsToUse = results.data.list;

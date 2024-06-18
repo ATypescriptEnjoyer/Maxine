@@ -27,7 +27,7 @@ export const downloadVideo = async (url: string, showWarnings: boolean, isClip: 
     const glob = new Glob(`**/${randomFileName.substring(randomFileName.lastIndexOf("/") + 1)}.*`);
     const filePath = Array.from(glob.scanSync({ absolute: true, cwd: "/tmp" }))[0];
     if (!await Bun.file(filePath).exists()) {
-        const fileTooLargeError = RegExp("File is larger than max-filesize").exec(
+        const fileTooLargeError = /File is larger than max-filesize/.exec(
             stdoutstr
         );
         if (fileTooLargeError) {

@@ -1,5 +1,4 @@
 import axios from "axios";
-import _ from "underscore";
 
 interface Post {
   data: {
@@ -30,7 +29,6 @@ export const getRedditPost = async (
 }> => {
   const url = template.replace("{0}", subreddit);
   const { data } = await axios.get(url);
-  //TODO: Sort out gallery embeds.
   const items = (data.data.children as Post[]).filter(
     (post: Post) =>
       post.data.domain !== "reddit.com" &&
@@ -40,7 +38,7 @@ export const getRedditPost = async (
   if (items.length === 0) {
     return null;
   }
-  const post = items.sort((a, b) => b.data.score - a.data.score)[0].data;
+  const post = items.toSorted((a, b) => b.data.score - a.data.score)[0].data;
   return {
     id: post.id,
     url: post.url,

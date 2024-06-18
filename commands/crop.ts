@@ -89,7 +89,7 @@ const execute = async (interaction: CommandInteraction) => {
 	const attachment = interaction.options.get("attachment");
 
 	const link =
-		(url?.value as string) || (attachment?.attachment?.url as string);
+		(url?.value as string) || (attachment?.attachment?.url);
 
 	const fileExt = link.split(".").slice(-1)[0];
 	const tmpFileName = tmp.tmpNameSync({

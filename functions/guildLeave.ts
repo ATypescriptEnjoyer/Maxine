@@ -1,4 +1,4 @@
-import { ActivityType, Client, Guild, TextChannel } from "discord.js";
+import { ActivityType, Client, Guild } from "discord.js";
 import { pluralise } from "../utils";
 
 const { STATUS } = process.env;

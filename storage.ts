@@ -20,7 +20,7 @@ const canUploadToAzure = (): boolean => {
 
 const uploadFile = async (filePath: string) => {
     if(!containerClient) {
-        throw "Azure Storage Not Configured.";
+        throw new Error("Azure Storage Not Configured.");
     }
     const fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
     const blockBlobClient = containerClient.getBlockBlobClient(fileName);
