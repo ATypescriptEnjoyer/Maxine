@@ -8,13 +8,13 @@ export const runGPTAssistant = async (msg: string, user?: string, image?: Buffer
 	});
 
 	if (!openai.apiKey) {
-        throw "Chat GPT API key not provided.";
+        throw new Error("Chat GPT API key not provided.");
 	}
 
 	const assistantId = process.env.CHATGPT_ASSISTANT_ID;
 
 	if (!assistantId) {
-		throw "Assistant ID not provided.";
+		throw new Error("Assistant ID not provided.");
 	}
 
 	const upload = image ? await openai.files.create({
@@ -48,17 +48,23 @@ export const runGPTAssistant = async (msg: string, user?: string, image?: Buffer
 
 	if (result.status !== "completed") {
 		await openai.beta.threads.runs.cancel(thread.id, run.id);
-		throw "Request timed out.";
+		throw new Error("Request timed out.");
 	}
 
 	const messages = await openai.beta.threads.messages.list(thread.id, {
 		order: "desc",
 	});
 	const content = messages.data[0].content[0];
-	const response =
-		content.type === "text"
-			? { content: content.text.value, type: "text" }
-			: content.type === "image_file" ? { content: content.image_file.file_id, type: "image" } : { content: content.image_url.url, type: "text" };
+	let response: {content: string; type: string};
+	if(content.type === "text") {
+		response = { content: content.text.value, type: "text" };
+	}
+	else if(content.type === "image_file") {
+		response = { content: content.image_file.file_id, type: "image" };
+	}
+	else {
+		response = { content: content.image_url.url, type: "text" }
+	}
 
 	if (response.type === "text") {
 		return response.content;
