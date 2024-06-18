@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      "module": "ESNext",
+      "target": "ESNext",
+      "moduleResolution": "NodeNext",
+      "lib": ["ESNext"],
+      "types": ["bun-types"],
+      "sourceMap": true,
+      "outDir": "build",
+      "esModuleInterop": true,
+      "paths": {
+        "assets/*": [
+          "./assets/*"
+        ]
+      }
+    },
+    "include": [
+      "./**/*.ts"
+    ],
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
+  }
