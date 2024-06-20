@@ -78,7 +78,8 @@ const execute = async (interaction: CommandInteraction) => {
     interaction.member.nickname
   )) as string;
 
-  return await interaction.followUp(`${role?.toString()} ${message}\r\n ${url}`);
+  await interaction.followUp(`${role?.toString()} ${message}`);
+  return await interaction.channel.send(url);
 };
 
 export { data, execute };
