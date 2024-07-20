@@ -50,7 +50,7 @@ Maxine is dockerised. Just view [here](docker-compose.example.yml) for the examp
 ## Feedback and Support:
 
 Have questions, suggestions, or need assistance? Submit an issue and I'll try assist!
-
+.
 ## Contributing:
 
 Contributions to Maxine are welcome! Whether it's fixing bugs, adding new features, or improving documentation, your contributions help make Maxine better for everyone.
