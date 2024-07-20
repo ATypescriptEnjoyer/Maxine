@@ -3,6 +3,13 @@ import { Glob } from "bun";
 
 const { NICKNAME } = process.env;
 
+const rewriteUrl = (url: string): string => {
+    if(url.includes("vxtwitter")) {
+        return url.replace("vxtwitter.", "twitter.")
+    }
+    return url;
+}
+
 export const downloadVideo = async (url: string, showWarnings: boolean, isClip: boolean): Promise<string> => {
     const randomFileName = tmp.tmpNameSync({ prefix: NICKNAME });
     const { stdout, stderr, exited } = Bun.spawn({
@@ -15,7 +22,7 @@ export const downloadVideo = async (url: string, showWarnings: boolean, isClip: 
             ...(!isClip ? ['--max-filesize', '100m'] : []),
             `-o`, `${randomFileName}.%(ext)s`,
             "--merge-output-format", "mp4",
-            url
+            rewriteUrl(url)
         ]
     });
     const exitCode = await exited;
