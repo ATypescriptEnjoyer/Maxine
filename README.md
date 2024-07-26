@@ -1,4 +1,4 @@
-# Maxine - Discord Bot Assistant
+# Maxine - Discord Bot Assistant!
 
 
 [![Docker image](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml/badge.svg)](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml)
