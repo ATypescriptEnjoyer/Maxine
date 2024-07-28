@@ -1,6 +1,5 @@
-# Maxine - Discord Bot Assistant
+# Maxine - Discord Bot Assistant!!
 
-[![CodeFactor](https://www.codefactor.io/repository/github/sasharyder/maxine/badge)](https://www.codefactor.io/repository/github/sasharyder/maxine)
 
 [![Docker image](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml/badge.svg)](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml)
 
