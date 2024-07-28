@@ -3,7 +3,7 @@ import {
 	CommandInteraction,
 	SlashCommandBuilder,
 } from "discord.js";
-import { runGPTAssistant } from "../runGPTAssistant";
+import { OllamaInstance } from "../OllamaInstance";
 
 const data = new SlashCommandBuilder()
 	.setName("ask")
@@ -15,9 +15,10 @@ const data = new SlashCommandBuilder()
 const execute = async (interaction: CommandInteraction) => {
 	await interaction.deferReply();
 
-	const runAssistant = await runGPTAssistant(
+	const ollama = new OllamaInstance();
+	const runAssistant = await ollama.ask(
 		interaction.options.get("query").value as string, 
-		interaction.user.displayName
+		`Address the user as ${interaction.user.displayName}`
 	)
 	if (typeof runAssistant === "string") {
 		await interaction.followUp(runAssistant);

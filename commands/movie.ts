@@ -7,16 +7,13 @@ import {
   SlashCommandBuilder,
 } from "discord.js";
 import { parse } from "date-fns";
-import { runGPTAssistant } from "../runGPTAssistant";
+import { OllamaInstance } from "../OllamaInstance";
 
 const data = new SlashCommandBuilder()
   .setName("movie")
   .setDescription("Sets an event for movie night")
   .addStringOption((opt) =>
-    opt
-      .setRequired(true)
-      .setName("name")
-      .setDescription("Name of the movie")
+    opt.setRequired(true).setName("name").setDescription("Name of the movie")
   )
   .addStringOption((opt) =>
     opt
@@ -72,11 +69,12 @@ const execute = async (interaction: CommandInteraction) => {
     reason: `Requested by ${interaction.member.nickname}`,
   });
 
-  const message = (await runGPTAssistant(
+  const ollama = new OllamaInstance();
+
+  const message = await ollama.ask(
     `Create me a invite message for the discord server ${interaction.guild.name} to come watch ${movieName} at ${when}. 
-    Give a bit of information about the movie, as well as enticing people to come watch! Don't include any "[your name]" type values..`,
-    interaction.member.nickname
-  )) as string;
+    Give a bit of information about the movie, as well as enticing people to come watch! Don't include any "[your name]" type values..`
+  );
 
   await interaction.followUp(`${role?.toString()} ${message}`);
   return await interaction.channel.send(url);
