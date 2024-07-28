@@ -5,14 +5,20 @@ import {
   ContextMenuCommandBuilder,
   MessageContextMenuCommandInteraction,
 } from "discord.js";
-import * as deepl from "deepl-node";
 import { OpenAI } from "openai";
+import { OllamaInstance } from "../OllamaInstance";
+import { GenerateResponse } from "ollama";
 
-const isDeeplResult = (
-  result: deepl.TextResult | void
-): result is deepl.TextResult => {
-  return (<deepl.TextResult>result)?.text !== undefined;
+const isLlmResult = (
+  result: GenerateResponse | void
+): result is GenerateResponse => {
+  return (<GenerateResponse>result)?.response !== undefined;
 };
+
+const llmResultToTranslateObject = (response: string | void): {code: string; text: string} | null => {
+  if(typeof response !== "string") return null;
+  return JSON.parse(response) as {code: string; text: string};
+}
 
 const data = new ContextMenuCommandBuilder()
   .setName("translate")
@@ -29,7 +35,7 @@ const execute = async (interaction: CommandInteraction) => {
     targetMessage.attachments.values()
   );
 
-  let textResultPromise: Promise<deepl.TextResult | void> = Promise.resolve();
+  let textResultPromise: Promise<string | void> = Promise.resolve();
   let imageResultPromise: Promise<string | void> = Promise.resolve();
   if (contextAttachments.length > 0) {
 	const imgUrl = targetMessage.attachments.first().url;
@@ -58,21 +64,17 @@ const execute = async (interaction: CommandInteraction) => {
 	}
   }
   if (contextText.trim().length > 0) {
-    const authKey = process.env.DEEPL_API_KEY;
-    if (authKey) {
-		const translator = new deepl.Translator(authKey);
-		textResultPromise = translator.translateText(contextText, null, "en-GB");
+    const ollama = new OllamaInstance();
+    if(ollama.ready()) {
+      textResultPromise = ollama.ask(contextText, "Translate the text to english, and return the result and the ISO 639-1 code in a JSON object of 'text' and 'code'.");
     }
   }
   const settledPromises = await Promise.all([
     textResultPromise,
     imageResultPromise,
   ]);
-  let text = isDeeplResult(settledPromises[0])
-    ? `${settledPromises[0].detectedSourceLang.toUpperCase()}: ${contextText}\r\n\r\nEN: ${
-        settledPromises[0].text
-      }`
-    : "";
+  const ParsedLLMResponse = llmResultToTranslateObject(settledPromises[0]);
+  let text = `${ParsedLLMResponse.code.toUpperCase()}: ${contextText} \r\n\r\nEN: ${ParsedLLMResponse.text}`;
 	if(settledPromises[1]) {
 		text += `\r\n\r\n${settledPromises[1]}`;
 	}

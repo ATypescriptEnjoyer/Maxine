@@ -47,7 +47,7 @@ for await (const file of commandFiles) {
 client.on("messageCreate", async (msg) => {
 	if(msg.author.bot) return;
 	const urls = msg.content.match(/\bhttps?:\/\/(x\.com|twitter\.com)\S*/gi);
-	if(urls.length > 0) {
+	if(urls?.length > 0) {
 		await msg.suppressEmbeds(true);
 		const newUrls = urls.map((url) => "https://vxtwitter.com" + url.slice(url.indexOf(".com/") + 4));
 		await msg.channel.send(newUrls.join("; "));
