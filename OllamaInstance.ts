@@ -1,7 +1,7 @@
 import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 
-const { OLLAMA_HOST, OLLAMA_MODEL, WEATHERAPI_APIKEY } = Bun.env;
+const { OLLAMA_HOST, OLLAMA_MODEL } = Bun.env;
 
 export interface TranslationResponse {
   translation?: string;
