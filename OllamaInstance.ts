@@ -36,7 +36,6 @@ export class OllamaInstance {
       ["user", user ?? "A discord user."],
       ["human", prompt],
     ]);
-    console.log(msg);
     return msg.content as string;
   };
 
