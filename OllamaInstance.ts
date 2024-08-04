@@ -1,8 +1,5 @@
 import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
-import { tool } from "@langchain/core/tools";
-import z from "zod";
-import axios from "axios";
 
 const { OLLAMA_HOST, OLLAMA_MODEL, WEATHERAPI_APIKEY } = Bun.env;
 
