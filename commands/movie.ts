@@ -71,12 +71,9 @@ const execute = async (interaction: CommandInteraction) => {
 
   const ollama = new OllamaInstance();
 
-  const message = await ollama.ask(
-    `Create me a invite message for the discord server ${interaction.guild.name} to come watch ${movieName} at ${when}. 
-    Give a bit of information about the movie, as well as enticing people to come watch! Don't include any "[your name]" type values..`
-  );
+  const message = await ollama.generateMovieAnnouncement(interaction.guild.name, movieName, when);
 
-  await interaction.followUp(`${role?.toString()} ${message}`);
+  await interaction.followUp(`${role} ${message}`);
   return await interaction.channel.send(url);
 };
 

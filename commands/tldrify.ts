@@ -25,10 +25,7 @@ const execute = async (interaction: CommandInteraction) => {
     return;
   }
 
-  const response = await ollama.ask(
-    msg,
-    "Shorten messages (TLDR) from users."
-  );
+  const response = await ollama.tldrify(msg);
   await interaction.followUp(response);
 };
 
