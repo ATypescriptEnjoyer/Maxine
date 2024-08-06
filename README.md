@@ -1,8 +1,5 @@
 # Maxine - Discord Bot Assistant!!
 
-
-[![Docker image](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml/badge.svg)](https://git.sashie.me/sasha/Maxine/actions/workflows/docker-image.yml)
-
 Maxine is a versatile Discord bot assistant designed to enhance your Discord server experience with a range of features, including support for ChatGPT 3.5-Turbo and DALLE 3, along with many other commands. Whether you need assistance, entertainment, or utility functions, Maxine has you covered.
 
 ## Features:
