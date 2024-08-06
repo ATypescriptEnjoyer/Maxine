@@ -1,5 +1,6 @@
 import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
+import z from "zod";
 
 const { OLLAMA_HOST, OLLAMA_MODEL } = Bun.env;
 
@@ -20,6 +21,22 @@ export class OllamaInstance {
       });
     }
   };
+
+  getHexForColour = async (colour: string) => {
+    const schemaForHex = z.object({
+      hexCode: z.string().describe("The hex code for the string colour. For example white would be #FFFFFF. If you are asked for the hex code for black, return #000001"),
+    });
+    
+    // Pass the schema to the withStructuredOutput method to bind it to the model.
+    const llmWithStructuredOutput = this.createModel().withStructuredOutput(schemaForHex, {
+      name: "get_colour_hexcode",
+    });
+    
+    const resultFromWSO = await llmWithStructuredOutput.invoke(
+      `What's the hex colour code equivalent for ${colour} ? Ensure you use the 'get_colour_hexcode' tool.`
+    );
+    return resultFromWSO.hexCode;
+  }
 
   ask = async (
     prompt: string,
