@@ -1,6 +1,7 @@
 import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import z from "zod";
+import { TavilyClient } from 'tavily';
 
 const { OLLAMA_HOST, OLLAMA_MODEL } = Bun.env;
 
@@ -41,17 +42,24 @@ export class OllamaInstance {
   ask = async (
     prompt: string,
     system?: string,
-    user?: string
+    user?: string,
+    webSearch?: boolean,
   ): Promise<string> => {
+    let context: string | null = null;
+    if(webSearch) {
+      const tavily = new TavilyClient();
+      const result = await tavily.search({query: prompt, max_results: 3});
+      context = result.results.map((result) => `${result.url} - ${result.title}:\r\n${result.content}`).join("\r\n\r\n");
+      
+    }
     const msg = await this.createModel().invoke([
       [
         "system",
         system ??
-          `You are a helpful assistant that is used for information, as well as general chatting. You have the following tools:
-          "get_current_weather" for retrieving the current weather as a weatherapi current weather JSON schema.`,
+          `You are a helpful assistant that is used for information, as well as general chatting.`,
       ],
       ["user", user ?? "A discord user."],
-      ["human", prompt],
+      ["human", `${prompt} ${context !== null ? `Use the following context to heavily influence your response ${context}` : ""}`],
     ]);
     return msg.content as string;
   };
