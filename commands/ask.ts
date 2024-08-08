@@ -20,7 +20,6 @@ const execute = async (interaction: CommandInteraction) => {
   const ollama = new OllamaInstance();
   const runAssistant = await ollama.ask(
     interaction.options.get("query").value as string,
-    `You are a helpful assistant and are happy to chat.`,
     interaction.user.displayName,
     (interaction.options.get("useweb")?.value as boolean)
   );
