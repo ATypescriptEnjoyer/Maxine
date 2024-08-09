@@ -1,7 +1,6 @@
-import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import z from "zod";
-import { tavily, TavilyClient } from "tavily";
+import { tavily } from "tavily";
 import { createInstance } from "./llmutils/createInstance";
 import { runTool } from "./llmutils/runTool";
 import { webSearch } from "./llmutils/tools/webSearch";
@@ -66,7 +65,7 @@ export class OllamaInstance {
       user: user,
     });
 
-    return msg.content as string;
+    return msg;
   };
 
   translate = async (
@@ -86,7 +85,7 @@ export class OllamaInstance {
         name: "get_translation",
       }
     );
-
+    
     const chatTemplate = ChatPromptTemplate.fromMessages([
       [
         "system",
@@ -114,7 +113,7 @@ export class OllamaInstance {
     const msg = await chain.invoke({
       input: text,
     });
-    return msg.content as string;
+    return msg;
   };
 
   generateMovieAnnouncement = async (
@@ -145,7 +144,7 @@ export class OllamaInstance {
       movie_name: movieName,
       movie_time: when,
     });
-    return msg.content as string;
+    return msg;
   };
 
   ready = async (): Promise<boolean> => {

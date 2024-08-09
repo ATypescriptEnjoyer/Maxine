@@ -1,12 +1,12 @@
-import { ChatOllamaInput, ChatOllama } from "@langchain/ollama";
+import { OllamaInput, Ollama } from "@langchain/ollama";
 
 const { OLLAMA_HOST, OLLAMA_MODEL } = Bun.env;
 
 export const createInstance = (
-  options?: ChatOllamaInput
-): ChatOllama => {
+  options?: OllamaInput
+): Ollama => {
   if (OLLAMA_HOST?.length > 0 && OLLAMA_MODEL?.length > 0) {
-    return new ChatOllama({
+    return new Ollama({
       baseUrl: OLLAMA_HOST,
       model: OLLAMA_MODEL,
       temperature: 0,
