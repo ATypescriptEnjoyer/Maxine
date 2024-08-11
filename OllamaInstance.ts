@@ -1,9 +1,8 @@
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import z from "zod";
-import { tavily } from "tavily";
+import { DuckDuckGoSearch } from "@langchain/community/tools/duckduckgo_search";
 import { createInstance } from "./llmutils/createInstance";
 import { runTool } from "./llmutils/runTool";
-import { webSearch } from "./llmutils/tools/webSearch";
 
 export interface TranslationResponse {
   translation?: string;
@@ -41,13 +40,14 @@ export class OllamaInstance {
   ): Promise<string> => {
     let context: string | null = null;
     if (shouldWebSearch) {
-      const searchResponses = await runTool<tavily.SearchResponse>(
-        webSearch({ max_results: 10, search_depth: "advanced" }),
+      const webSearcher = new DuckDuckGoSearch({ maxResults: 10 })
+      const searchResponses = await runTool<{title: string; link: string; snippet: string}[]>(
+        webSearcher,
         prompt
       );
-      context = searchResponses.results
+      context = searchResponses
         ?.map(
-          (searchResult) => `${searchResult.title} - ${searchResult.content}`
+          (searchResult) => `URL [${searchResult.link}] - TITLE [${searchResult.title}] - SNIPPET [${searchResult.snippet}]`
         )
         .join("\r\n\r\n");
     }
@@ -59,7 +59,9 @@ export class OllamaInstance {
     ]);
 
     const msg = await chatTemplate.pipe(createInstance()).invoke({
-      system: "You are a helpful assistant. Use the assistant provided context that may have been provided to respond the users request.",
+      system: `
+      You are a helpful assistant. Use the assistant provided context that may have been provided to respond the users request. 
+      Don't make any mention of the fact that you have a 'provided context'`,
       context,
       prompt: prompt,
       user: user,
