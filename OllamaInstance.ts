@@ -1,7 +1,6 @@
-import { ChatOllama, ChatOllamaInput } from "@langchain/ollama";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import z from "zod";
-import { tavily, TavilyClient } from "tavily";
+import { tavily } from "tavily";
 import { createInstance } from "./llmutils/createInstance";
 import { runTool } from "./llmutils/runTool";
 import { webSearch } from "./llmutils/tools/webSearch";
