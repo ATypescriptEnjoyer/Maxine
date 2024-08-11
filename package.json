@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@azure/storage-blob": "^12.10.0",
-    "@langchain/ollama": "^0.0.4",
+    "@langchain/ollama": "^0.0.2",
     "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.12",
     "date-fns": "^3.6.0",
