@@ -6,7 +6,7 @@ ENV YOUTUBE_DL_SKIP_DOWNLOAD=true \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     NICKNAME=Maxine
 
-RUN apt update && apt install python3 && \
+RUN apt update && apt install python3 -y && \
     wget https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/yt-dlp -P /usr/bin/ && \
     chmod +x /usr/bin/yt-dlp && \
     wget https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz && \
