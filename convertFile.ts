@@ -2,7 +2,7 @@ import { downloadVideo } from "./downloader";
 import tmp from "tmp";
 import { unlink } from "node:fs/promises";
 
-const BASE_ARGS = "-c:v libx264 -c:a aac";
+const BASE_ARGS = "-c:v h264_nvenc -c:a aac";
 const GIF_ARGS = "-vf fps=24,scale=320:-1:flags=lanczos -c:v gif";
 
 const { NICKNAME } = process.env;
