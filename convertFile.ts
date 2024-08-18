@@ -2,7 +2,7 @@ import { downloadVideo } from "./downloader";
 import tmp from "tmp";
 import { unlink } from "node:fs/promises";
 
-const BASE_ARGS = "-hwaccel cuda -c:v h264_nvenc -c:a aac";
+const BASE_ARGS = "-c:v h264_nvenc -c:a aac";
 const GIF_ARGS = "-vf fps=24,scale=320:-1:flags=lanczos -c:v gif";
 
 const { NICKNAME } = process.env;
@@ -19,7 +19,8 @@ export const convertFile = async (url: string, ext: string, isLocalFile: boolean
     });
     const filePath = isLocalFile ? url : await downloadVideo(url, false, false);
     const convertArgs = convertArguments(ext);
-    const command = `ffmpeg -v error -i ${filePath} ${extraFfmpegArgs} ${convertArgs} ${secondaryTempFile}`;
+    const command = `ffmpeg -hwaccel cuda -v error -i ${filePath} ${extraFfmpegArgs} ${convertArgs} ${secondaryTempFile}`;
+    console.info(`\r\n${command}\r\n`);
     const { exited, stdout } = Bun.spawn(command.split(" "));
     const exitCode = await exited;
     if (exitCode !== 0) {
