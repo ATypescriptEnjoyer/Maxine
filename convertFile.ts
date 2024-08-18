@@ -19,7 +19,7 @@ export const convertFile = async (url: string, ext: string, isLocalFile: boolean
     });
     const filePath = isLocalFile ? url : await downloadVideo(url, false, false);
     const convertArgs = convertArguments(ext);
-    const command = `ffmpeg -v quiet -i ${filePath} ${extraFfmpegArgs} ${convertArgs} ${secondaryTempFile}`;
+    const command = `ffmpeg -v error -i ${filePath} ${extraFfmpegArgs} ${convertArgs} ${secondaryTempFile}`;
     const { exited, stdout } = Bun.spawn(command.split(" "));
     const exitCode = await exited;
     if (exitCode !== 0) {
